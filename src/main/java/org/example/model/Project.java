@@ -16,7 +16,7 @@ public class Project {
     private int score;
 
     @ManyToOne
-    @JoinColumn(name = "SUBMITTED_BY")
+    @JoinColumn(name = "submitted_by")
     private Student student;
 
     public int getId() {
@@ -66,7 +66,6 @@ public class Project {
                 ", title='" + title + '\'' +
                 ", submissionDate=" + submissionDate +
                 ", score=" + score +
-                ", student=" + student +
                 '}';
     }
 }

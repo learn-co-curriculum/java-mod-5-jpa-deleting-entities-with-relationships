@@ -51,6 +51,13 @@ public class JpaCreate {
         project3.setSubmissionDate(LocalDate.of(2022, 7, 30));
         project3.setScore(87);
 
+        // create subjects
+        Subject subject1 = new Subject();
+        subject1.setTitle("Arts and Crafts");
+        Subject subject2 = new Subject();
+        subject2.setTitle("Reading");
+        Subject subject3 = new Subject();
+        subject3.setTitle("Math");
 
         // create student-card associations
         student1.setCard(card1);
@@ -62,22 +69,9 @@ public class JpaCreate {
         project2.setStudent(student1);
         project3.setStudent(student2);
 
-        student1.addProject(project1);
-        student1.addProject(project2);
-        student2.addProject(project3);
-
-        // create subjects
-        Subject subject1 = new Subject();
-        subject1.setTitle("Arts and Crafts");
-        Subject subject2 = new Subject();
-        subject2.setTitle("Reading");
-        Subject subject3 = new Subject();
-        subject3.setTitle("Math");
-
-        // create students >-< subjects association
+        // create students <> subjects association
         student1.addSubject(subject1);
         student1.addSubject(subject2);
-
         student2.addSubject(subject2);
         student2.addSubject(subject3);
 
