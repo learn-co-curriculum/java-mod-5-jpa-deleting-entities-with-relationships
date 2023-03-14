@@ -34,10 +34,6 @@ public class IdCard {
         return student;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
     @Override
     public String toString() {
         return "IdCard{" +

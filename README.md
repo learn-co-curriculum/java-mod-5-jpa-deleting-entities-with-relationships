@@ -9,7 +9,7 @@
 
 The model relationships currently look like this:
 
-![Updated many to many relationship join table](https://curriculum-content.s3.amazonaws.com/6036/java-mod-5-jpa-manytomany/student_subject_withjointable.png)
+![Many to many relationship table](https://curriculum-content.s3.amazonaws.com/6036/java-mod-5-jpa-manytomany/student_subject_nojointable.png)
 
 If we remove a student from the database, it is not
 immediately clear what will happen to the rows that reference the deleted
@@ -37,7 +37,6 @@ to the `@OneToOne` and `@OneToMany` annotations:
 // Student.java
 
 @Entity
-@Table(name = "STUDENT_DATA")
 public class Student {
     ...
 
@@ -53,7 +52,8 @@ public class Student {
 
 Note that we don't want to cascade student deletions to the subject table,
 since the relationship is many-to-many and other students may take the subject.
-However, JPA knows to remove associated rows from the many-to-many join table.
+However, JPA knows to remove rows associated with the deleted student
+from the many-to-many join table.
 
 1. Edit `persistence.xml` and set `hibernate.hbm2ddl.auto` to `none`.
 2. Run the `JpaDelete.main` method to delete the student with id `1`. 
@@ -95,7 +95,7 @@ public class JpaDelete {
 
 Use **pgAdmin** to confirm the student is deleted:
 
-`SELECT * FROM STUDENT_DATA;`
+`SELECT * FROM STUDENT;`
 
 | ID  | DOB        | NAME | STUDENTGROUP |
 |-----|------------|------|--------------|
@@ -124,7 +124,7 @@ Confirm the deletion of the student caused their id card to be deleted:
 Confirm the deletion of the student removed rows associated with
 the subjects they were taking:
 
-`SELECT * FROM STUDENT_DATA_SUBJECT;`
+`SELECT * FROM STUDENT_SUBJECT;`
 
 | STUDENTS_ID | SUBJECTS_ID | 
 |-------------|-------------|
@@ -157,7 +157,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "STUDENT_DATA")
 public class Student {
     @Id
     @GeneratedValue
@@ -189,6 +188,7 @@ public class Student {
 
     public void addProject(Project project) {
         projects.add(project);
+        project.setStudent(this);
     }
 
     public List<Project> getProjects() {
@@ -246,8 +246,6 @@ public class Student {
     }
 }
 ```
-
-
 
 ## Conclusion
 
